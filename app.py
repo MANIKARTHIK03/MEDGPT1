@@ -16,6 +16,13 @@ from modules.viz import show_visualizations
 from modules.prediction import train_predict
 from modules.report_generator import generate_report
 import warnings
+import warnings
+try:
+    from streamlit_mic_recorder import mic_recorder
+except (ImportError, ModuleNotFoundError) as e:
+    warnings.warn(f"⚠️ streamlit_mic_recorder unavailable ({e}) — microphone input disabled.")
+    mic_recorder = None
+
 # Handle SpeechRecognition safely (Python 3.13 dropped aifc)
 try:
     import speech_recognition as sr
