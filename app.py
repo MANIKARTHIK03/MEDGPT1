@@ -16,30 +16,26 @@ from modules.viz import show_visualizations
 from modules.prediction import train_predict
 from modules.report_generator import generate_report
 import warnings
-try:
-    from pydub import AudioSegment
-except (ImportError, ModuleNotFoundError):
-    warnings.warn("⚠️ pyaudioop not available, skipping audio optimization")
-    AudioSegment = None
-
-import warnings
+# Handle SpeechRecognition safely (Python 3.13 dropped aifc)
 try:
     import speech_recognition as sr
 except (ImportError, ModuleNotFoundError) as e:
     warnings.warn(f"⚠️ SpeechRecognition unavailable ({e}). Voice input disabled.")
     sr = None
 
-if sr is None:
-    st.warning("🎤 Voice input is not supported on this environment (Python 3.13).")
-else:
-    # existing mic_recorder / recognizer logic here
-
-
+# Handle pydub safely (Python 3.13 dropped pyaudioop)
+try:
+    from pydub import AudioSegment
+except (ImportError, ModuleNotFoundError) as e:
+    warnings.warn(f"⚠️ Pydub audio module partially unavailable ({e}). Some audio features disabled.")
+    AudioSegment = None
 
 # ---------------- FFmpeg setup ---------------- #
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin"
-AudioSegment.converter = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffmpeg.exe"
-AudioSegment.ffprobe = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffprobe.exe"
+if AudioSegment:
+    AudioSegment.converter = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffmpeg.exe"
+    AudioSegment.ffprobe = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffprobe.exe"
+
 
 
 # ---------------- Page Setup ---------------- #
