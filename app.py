@@ -7,7 +7,6 @@ import time
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 from io import BytesIO
-import speech_recognition as sr
 from streamlit_mic_recorder import mic_recorder
 
 # Local modules (MedGPT logic)
@@ -22,6 +21,20 @@ try:
 except (ImportError, ModuleNotFoundError):
     warnings.warn("⚠️ pyaudioop not available, skipping audio optimization")
     AudioSegment = None
+
+import warnings
+try:
+    import speech_recognition as sr
+except (ImportError, ModuleNotFoundError) as e:
+    warnings.warn(f"⚠️ SpeechRecognition unavailable ({e}). Voice input disabled.")
+    sr = None
+
+if sr is None:
+    st.warning("🎤 Voice input is not supported on this environment (Python 3.13).")
+else:
+    # existing mic_recorder / recognizer logic here
+
+
 
 # ---------------- FFmpeg setup ---------------- #
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin"
