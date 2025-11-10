@@ -7,6 +7,8 @@ import time
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 from io import BytesIO
+from pydub import AudioSegment
+import speech_recognition as sr
 from streamlit_mic_recorder import mic_recorder
 
 # Local modules (MedGPT logic)
@@ -16,33 +18,16 @@ from modules.viz import show_visualizations
 from modules.prediction import train_predict
 from modules.report_generator import generate_report
 import warnings
-import warnings
-try:
-    from streamlit_mic_recorder import mic_recorder
-except (ImportError, ModuleNotFoundError) as e:
-    warnings.warn(f"⚠️ streamlit_mic_recorder unavailable ({e}) — microphone input disabled.")
-    mic_recorder = None
-
-# Handle SpeechRecognition safely (Python 3.13 dropped aifc)
-try:
-    import speech_recognition as sr
-except (ImportError, ModuleNotFoundError) as e:
-    warnings.warn(f"⚠️ SpeechRecognition unavailable ({e}). Voice input disabled.")
-    sr = None
-
-# Handle pydub safely (Python 3.13 dropped pyaudioop)
 try:
     from pydub import AudioSegment
-except (ImportError, ModuleNotFoundError) as e:
-    warnings.warn(f"⚠️ Pydub audio module partially unavailable ({e}). Some audio features disabled.")
+except (ImportError, ModuleNotFoundError):
+    warnings.warn("⚠️ pyaudioop not available, skipping audio optimization")
     AudioSegment = None
 
 # ---------------- FFmpeg setup ---------------- #
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin"
-if AudioSegment:
-    AudioSegment.converter = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffmpeg.exe"
-    AudioSegment.ffprobe = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffprobe.exe"
-
+AudioSegment.converter = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffmpeg.exe"
+AudioSegment.ffprobe = r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin\ffprobe.exe"
 
 
 # ---------------- Page Setup ---------------- #
