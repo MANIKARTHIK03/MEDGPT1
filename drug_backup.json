@@ -1,0 +1,7 @@
+[
+  {"drug_a": "aspirin", "drug_b": "warfarin", "description": "Increased bleeding risk."},
+  {"drug_a": "metformin", "drug_b": "alcohol", "description": "Risk of lactic acidosis."},
+  {"drug_a": "ibuprofen", "drug_b": "prednisone", "description": "May increase stomach bleeding risk."},
+  {"drug_a": "paracetamol", "drug_b": "alcohol", "description": "May cause liver damage when taken together."},
+  {"drug_a": "trioxsalen", "drug_b": "tetracycline", "description": "May increase photosensitivity risk."}
+]

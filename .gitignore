@@ -1,0 +1,7 @@
+.env
+venv/
+__pycache__/
+*.zip
+*.pkl
+*.h5
+symptom_disease.csv

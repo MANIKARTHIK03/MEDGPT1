@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#0077B6"                # Deep medical blue
+backgroundColor = "#F2FAFB"             # Soft very light cyan-white background
+secondaryBackgroundColor = "#CAF0F8"    # Gentle aqua accent (like the gradient background)
+textColor = "#023E8A"                   # Navy blue text
+font = "sans serif"
