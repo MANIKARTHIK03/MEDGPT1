@@ -7,7 +7,6 @@ import time
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 from io import BytesIO
-from pydub import AudioSegment
 import speech_recognition as sr
 from streamlit_mic_recorder import mic_recorder
 
@@ -17,6 +16,12 @@ from modules.eda import load_data, show_basic_info
 from modules.viz import show_visualizations
 from modules.prediction import train_predict
 from modules.report_generator import generate_report
+import warnings
+try:
+    from pydub import AudioSegment
+except (ImportError, ModuleNotFoundError):
+    warnings.warn("⚠️ pyaudioop not available, skipping audio optimization")
+    AudioSegment = None
 
 # ---------------- FFmpeg setup ---------------- #
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg-2025-11-06-git-222127418b-full_build\bin"
