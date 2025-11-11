@@ -7,6 +7,7 @@ import time
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 from io import BytesIO
+from pydub import AudioSegment
 import speech_recognition as sr
 from streamlit_mic_recorder import mic_recorder
 
